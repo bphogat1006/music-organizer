@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    MO - Listening
+{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block body %}
+    <table>
+        {% for item in listening_list %}
+            <tr>
+                {{ item.artist }}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

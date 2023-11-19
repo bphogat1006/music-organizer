@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    MO - Learning - Edit Entry
+{% endblock %}
+
+{% block header %}
+    {% include 'datatables.html' %}
+{% endblock %}
+
+{% block body %}
+    <form action="{{ url_for('root.learning.edit_entry' ) }}" method="POST">
+        <h2 class="mb-3">Edit Entry</h2>
+        <input type="hidden" name="id" value="{{ entry.id }}">
+        <div class="mb-3">
+            <label for="artist" class="form-label">Artist</label>
+            <input type="text" name="artist" class="form-control" id="artist" value="{{ entry.artist }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="album" class="form-label">Album</label>
+        <input type="text" name="album" class="form-control" id="album" value="{{ entry.album }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="track" class="form-label">Track</label>
+        <input type="text" name="track" class="form-control" id="track" value="{{ entry.track }}">
+        </div>
+        <div class="mb-3">
+            <label for="instrument" class="form-label">Instrument</label>
+            <select class="form-select" name="instrument" id="instrument" required>
+                <option value="piano">Piano</option>
+                <option value="guitar">Guitar</option>
+                <option value="bass">Bass</option>
+                <option value="drums">Drums</option>
+                <option value="trumpet">Trumpet</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="reason" class="form-label">Reason</label>
+        <input type="text" name="reason" class="form-control" id="reason" value="{{ entry.reason }}">
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" name="backlog" class="form-check-input" id="backlog" {% if entry.backlog %}checked{% endif %}>
+            <label class="form-check-label" for="backlog">Backlog?</label>
+        </div>
+        <input type="submit" value="Submit" class="btn btn-primary mb-3">
+    </form>
+
+    {% if new %}
+        <form action="{{ url_for('root.learning.edit_entry' ) }}" method="POST" class="mb-5">
+            <input type="hidden" name="id" value="{{ entry.id }}">
+            <input type="hidden" name="delete" value="1">
+            <input type="submit" value="Delete" class="btn btn-danger">
+        </form>
+    {% endif %}
+
+    <h2 class="mb-3">External Links</h2>
+    {% if links|length > 0 %}
+        <table id="links-table" class="table table-hover" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="d-none">id</th>
+                    <th>Type</th>
+                    <th>URL</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for link in links %}
+                    <tr style="cursor: pointer;">
+                        <td class="d-none">{{ link.id }}</td>
+                        <td>{{ link.type }}</td>
+                        <td>{{ link.url }}</td>
+                        <td>{{ link.description }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <a href="{{ url_for('root.learning.edit_link' ) }}?learning_id={{ entry.id }}" class="btn btn-primary mt-3">Add Link</a>
+
+    <script>
+        // if loading an existing entry, change "select" element to reflect the correct instrument for that entry
+        if ('{{ entry.instrument }}' !== '') {
+            document.getElementById('instrument').value = '{{ entry.instrument }}'
+        }
+        
+        // configure table
+        const table = new DataTable('#links-table', {
+            info: false,
+            paging: false,
+            stateSave: false,
+            searching: false,
+            ordering: false,
+            order: [[0, 'asc']],
+        });
+
+        // row click handler
+        table.on('click', 'tbody tr', function (e) {
+            row = e.currentTarget
+            id = row.cells[0].innerText
+            window.location = "{{ url_for('root.learning.edit_link' ) }}?id="+id
+        });
+    </script>
+{% endblock %}
