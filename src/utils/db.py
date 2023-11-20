@@ -27,6 +27,10 @@ class LearningDB:
     def __init__(self) -> None:
         pass
 
+    def updateLastViewed(self, id):
+        with connection.cursor() as cursor:
+            cursor.execute('UPDATE `learning` SET `last_viewed` = CURRENT_TIMESTAMP WHERE `id` = %s;', [id])
+
     def getFormattedTable(self):
         with connection.cursor() as cursor:
             cursor.execute('SELECT * FROM `learning`')

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, redirect, url_for
+from flask import Blueprint, request, render_template, redirect, url_for, Response
 from utils.db import LearningDB
 
 # create app
@@ -19,6 +19,8 @@ def edit_entry():
         if 'id' in request.args.keys():
             new = True
             entry, links = db.getEntry(request.args['id'])
+            # update last viewed
+            db.updateLastViewed(request.args['id'])
         else:
             entry = {'id': -1, 'artist': '', 'album': '', 'track': '', 'instrument': '', 'reason': ''}
         return render_template('edit_entry.html', new=new, entry=entry, links=links)
@@ -60,3 +62,8 @@ def edit_link():
                 request.form['type'], request.form['url'], request.form['description'], request.form['id']
             )
         return redirect(url_for('root.learning.index'))
+
+@app.route('/viewed', methods=['POST'])
+def viewed():
+    db.updateLastViewed(request.form['id'])
+    return Response(status=200)

@@ -33,6 +33,7 @@
         <thead>
             <tr>
                 <th class="d-none">id</th>
+                <th class="d-none">last_viewed</th>
                 <th>Artist</th>
                 <th>Album</th>
                 <th>Track</th>
@@ -46,13 +47,14 @@
             {% for item in learning_list %}
                 <tr style="cursor: pointer;" class="{% if item.backlog == 'yes' %}backlog{% endif %}">
                     <td class="d-none">{{ item.id }}</td>
+                    <td class="d-none">{{ item.last_viewed }}</td>
                     <td>{{ item.artist }}</td>
                     <td>{{ item.album }}</td>
                     <td>{{ item.track }}</td>
                     <td>{{ item.instrument }}</td>
                     <td>{{ item.reason }}</td>
                     <td>{{ item.backlog }}</td>
-                    <td class="links-col">
+                    <td class="learning-links">
                         {% for link in item.links %}
                             {{ link | safe }}<br>
                         {% endfor %}
@@ -70,26 +72,30 @@
             info: false,
             paging: false,
             stateSave: false,
-            order: [[6, 'asc'], [1, 'asc']],
+            order: [[7, 'asc'], [1, 'desc']],
             columnDefs: [
-                {
+                { // id
                     target: 0,
                     searchable: false
                 },
-                {
-                    target: 4,
+                { // last_viewed
+                    target: 1,
                     searchable: false
                 },
-                {
+                { // instrument
                     target: 5,
                     searchable: false
                 },
-                {
+                { // reason
                     target: 6,
                     searchable: false
                 },
-                {
+                { // backlog
                     target: 7,
+                    searchable: false
+                }, // links
+                {
+                    target: 8,
                     searchable: false
                 },
             ]
@@ -103,6 +109,23 @@
             row = e.currentTarget
             id = row.cells[0].innerText
             window.location = "{{ url_for('root.learning.edit_entry' ) }}?id="+id
+        });
+
+        // update backend on link click (to sort table by most recently viewed)
+        $('.learning-links a').on('click', function(event) {
+            var row = $(this).closest('tr');
+            var rowId = row.find('td:first').text();
+            $.ajax({
+                type: 'POST',
+                url: '{{ url_for("root.learning.viewed") }}',
+                data: { id: rowId },
+                success: function(response) {},
+                error: function(error) {
+                    var e = 'failed to make POST request'+error
+                    alert(e)
+                    console.error(e);
+                }
+            });
         });
 
         // instrument dropdown handler
