@@ -18,11 +18,11 @@
         </div>
         <div class="mb-3">
             <label for="album" class="form-label">Album</label>
-        <input type="text" name="album" class="form-control" id="album" value="{{ entry.album }}" required>
+            <input type="text" name="album" class="form-control" id="album" value="{{ entry.album }}" required>
         </div>
         <div class="mb-3">
             <label for="track" class="form-label">Track</label>
-        <input type="text" name="track" class="form-control" id="track" value="{{ entry.track }}">
+            <input type="text" name="track" class="form-control" id="track" value="{{ entry.track }}">
         </div>
         <div class="mb-3">
             <label for="instrument" class="form-label">Instrument</label>
@@ -36,7 +36,7 @@
         </div>
         <div class="mb-3">
             <label for="reason" class="form-label">Reason</label>
-        <input type="text" name="reason" class="form-control" id="reason" value="{{ entry.reason }}">
+            <input type="text" name="reason" class="form-control" id="reason" value="{{ entry.reason }}" autocomplete="off">
         </div>
         <div class="mb-3 form-check">
             <input type="checkbox" name="backlog" class="form-check-input" id="backlog" {% if entry.backlog %}checked{% endif %}>

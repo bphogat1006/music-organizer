@@ -11,15 +11,15 @@
         <input type="hidden" name="learning_id" value="{{ link.learning_id }}">
         <div class="mb-3">
             <label for="type" class="form-label">Type</label>
-            <input type="text" name="type" class="form-control" id="type" value="{{ link.type }}">
+            <input type="text" name="type" class="form-control" id="type" value="{{ link.type }}" autocomplete="off">
         </div>
         <div class="mb-3">
             <label for="url" class="form-label">URL</label>
-        <input type="text" name="url" class="form-control" id="url" value="{{ link.url }}">
+            <input type="text" name="url" class="form-control" id="url" value="{{ link.url }}" autocomplete="off">
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-        <input type="text" name="description" class="form-control" id="description" value="{{ link.description }}">
+            <input type="text" name="description" class="form-control" id="description" value="{{ link.description }}" autocomplete="off">
         </div>
         <input type="submit" value="Submit" class="btn btn-primary mb-3">
     </form>
