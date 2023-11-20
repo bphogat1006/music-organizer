@@ -5,21 +5,21 @@
 {% endblock %}
 
 {% block body %}
-    <form action="{{ url_for('root.learning.edit_link' ) }}" method="POST">
+    <form action="{{ url_for('root.learning.edit_link' ) }}" method="POST" autocomplete="off">
         <h2 class="mb-3">Edit Link</h2>
         <input type="hidden" name="id" value="{{ link.id }}">
         <input type="hidden" name="learning_id" value="{{ link.learning_id }}">
         <div class="mb-3">
             <label for="type" class="form-label">Type</label>
-            <input type="text" name="type" class="form-control" id="type" value="{{ link.type }}" autocomplete="off">
+            <input type="text" name="type" class="form-control" id="type" value="{{ link.type }}">
         </div>
         <div class="mb-3">
             <label for="url" class="form-label">URL</label>
-            <input type="text" name="url" class="form-control" id="url" value="{{ link.url }}" autocomplete="off">
+            <input type="text" name="url" class="form-control" id="url" value="{{ link.url }}">
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <input type="text" name="description" class="form-control" id="description" value="{{ link.description }}" autocomplete="off">
+            <input type="text" name="description" class="form-control" id="description" value="{{ link.description }}">
         </div>
         <input type="submit" value="Submit" class="btn btn-primary mb-3">
     </form>

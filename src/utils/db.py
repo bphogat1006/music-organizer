@@ -50,7 +50,7 @@ class LearningDB:
                         html = f'<a target="_blank" href="{link["url"]}">{link["type"]}</a>'
                     html = '<strong>'+html+'</strong>'
                     if link['description'] is not None and link['description'] != '':
-                        html += ': ' + link['description']
+                        html += ' - ' + link['description']
                     entry['links'].append(html)
         return entries
 
